@@ -1,0 +1,8 @@
+.venv/**
+.*
+
+*.sqlite
+*.db
+
+Dockerfile
+docker-compose.yaml

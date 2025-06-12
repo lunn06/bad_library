@@ -1,0 +1,20 @@
+[project]
+name = "library"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.1.6",
+    "django-environ>=0.12.0",
+    "django-stubs[compatible-mypy]>=5.1.3",
+    "mysqlclient>=2.2.7",
+    "ruff>=0.11.3",
+]
+
+[tool.mypy]
+allow_untyped_globals = true
+plugins = ["mypy_django_plugin.main"]
+mypy_path = "./.venv/bin/mypy"
+
+[tool.django-stubs]
+django_settings_module = "myproject.settings"
