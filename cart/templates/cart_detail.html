@@ -1,0 +1,59 @@
+<!-- templates/cart/detail.html -->
+{% extends "home.html" %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+    <h1>Ваша корзина</h1>
+
+    {% with total_items=cart|length %}
+        {% if total_items > 0 %}
+            <table class="cart-table">
+                <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Цена за шт.</th>
+                    <th>Сумма</th>
+                    <th>Добавить</th>
+                    <th>Удалить</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart %}
+                    <tr>
+                        <td>{{ item.product.title }}</td>
+                        <td>{{ item.quantity }} шт.</td>
+                        <td>{{ item.price }} руб.</td>
+                        <td>{{ item.total_price }} руб.</td>
+                        <td>
+                            <form action="{% url 'cart:cart_add' item.product.pk 1 %}" method="post">
+                                {{ item.update_quantity_form.quantity }}
+                                {{ item.update_quantity_form.update }}
+                                <input type="submit" value="Добавить">
+                                {% csrf_token %}
+                            </form>
+                        </td>
+                        <td>
+                            <a href="{% url 'cart:cart_remove' item.product.id %}">Удалить</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr class="total">
+                    <td colspan="3">Итого:</td>
+                    <td>{{ cart.get_total_price }} руб.</td>
+                </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-cart">
+                <p>Ваша корзина пуста</p>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="cart-actions">
+        <a href="{% url 'book_list' %}" class="continue-shopping">Продолжить покупки</a>
+        <a href="{% url 'order_detail' %}" class="checkout">Оформить заказ</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "home.html" %}
+{% block content %}
+    <h1>Books</h1>
+    <form method="get" action="{% url 'book_search' %}" class="book-search-form">
+        <div class="search-fields">
+            <input type="text"
+                   name="q"
+                   placeholder="Название книги"
+                   value="{{ request.GET.q }}"
+                   class="search-input">
+
+            <input type="text"
+                   name="author"
+                   placeholder="Автор"
+                   value="{{ request.GET.author }}"
+                   class="search-input">
+
+            <input type="text"
+                   name="genre"
+                   placeholder="Жанр"
+                   value="{{ request.GET.genre }}"
+                   class="search-input">
+        </div>
+        <button type="submit" class="search-button">Найти</button>
+    </form>
+    <ul>
+        {% for book in books %}
+            <li><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a> by {{ book.authors.0 }}
+                ({{ book.publication_date|date:"d-m-Y" }})
+            </li>
+            <form action="{% url 'cart:cart_add' book.pk 1 %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Добавить в корзину">
+            </form>
+        {% empty %}
+            <li>No books available.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

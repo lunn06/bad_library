@@ -1,0 +1,29 @@
+{% extends "home.html" %}
+
+{% block content %}
+    <h2>Результаты поиска</h2>
+
+    {% if books %}
+        <ul class="book-list">
+            {% for book in books %}
+                <li>
+                    <a href="{% url 'book_detail' book.id %}">
+                        {{ book.title }}
+                    </a>
+                    <p>Авторы:
+                        {% for author in book.authors.all %}
+                            {{ author.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p>Жанры:
+                        {% for genre in book.genres.all %}
+                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Книги не найдены</p>
+    {% endif %}
+{% endblock %}

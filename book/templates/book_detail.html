@@ -1,0 +1,18 @@
+{% extends "home.html" %}
+{% block content %}
+    <h1>{{ book.title }}</h1>
+    <p><strong>Authors:</strong></p>
+    {% for author in book.authors.all %}
+        <li><a href="{% url 'author_detail' author.pk %}">{{ author.name }}</a></li>
+    {% empty %}
+        No authors
+    {% endfor %}
+
+    <p><strong>Genres:</strong></p>
+    {% for genre in book.genres.all %}
+        <li><a href="{% url 'genre_detail' genre.pk %}">{{ genre.name }}</a></li>
+    {% empty %}
+        No genres
+    {% endfor %}
+    <p><strong>Publication Date:</strong> {{ book.publication_date|date:"d-m-Y" }}</p>
+{% endblock %}

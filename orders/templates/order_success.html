@@ -1,0 +1,9 @@
+<!-- templates/cart/detail.html -->
+{% extends "home.html" %}
+
+{% block title %}Заказ{% endblock %}
+
+{% block content %}
+    <h1>Ваш заказ выполнен!</h1>
+    <a href="{% url 'home' %}">На главную</a>
+{% endblock %}

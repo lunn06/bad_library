@@ -22,6 +22,11 @@ from library import settings
 
 urlpatterns = [
     path('', include('home.urls')),
+    path('user/', include('user.urls')),
+    path('books/', include('book.urls')),
+    path('cart/', include('cart.urls', namespace='cart')),
+
+    path('order/', include('orders.urls')),
 
     path('admin/', admin.site.urls),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]

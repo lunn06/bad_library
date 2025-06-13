@@ -1,0 +1,69 @@
+<!-- templates/cart/detail.html -->
+{% extends "home.html" %}
+
+{% block title %}Заказ{% endblock %}
+
+{% block content %}
+    <h1>Ваш заказ</h1>
+    {% if failed %}
+        <h2>НЕВЕРНЫЕ ДАННЫЕ</h2>
+    {% endif %}
+
+    {% with total_items=cart|length %}
+        {% if total_items > 0 %}
+            <table class="cart-table">
+                <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Цена за шт.</th>
+                    <th>Сумма</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart %}
+                    <tr>
+                        <td>{{ item.product.title }}</td>
+                        <td>{{ item.quantity }} шт.</td>
+                        <td>{{ item.price }} руб.</td>
+                        <td>{{ item.total_price }} руб.</td>
+                    </tr>
+                {% endfor %}
+                <tr class="total">
+                    <td colspan="3">Итого:</td>
+                    <td>{{ cart.get_total_price }} руб.</td>
+                </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-cart">
+                <p>Ваша корзина пуста</p>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="post" action="{% url 'order_detail' %}" class="order-form">
+        {% csrf_token %}
+        <div class="search-fields">
+            <input type="text"
+                   name="name"
+                   placeholder="Имя"
+                   value="{{ request.POST.name }}"
+                   class="order-input">
+
+            <input type="text"
+                   name="address"
+                   placeholder="Адрес"
+                   value="{{ request.POST.address }}"
+                   class="order-input">
+
+            <input type="text"
+                   name="card"
+                   placeholder="Последний 3 цифры карты"
+                   value="{{ request.POST.card }}"
+                   class="order-input">
+
+        </div>
+        <button type="submit" class="search-button">Отправить заказ</button>
+    </form>
+{% endblock %}

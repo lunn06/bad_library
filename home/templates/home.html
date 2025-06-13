@@ -3,10 +3,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <div class="user-info-container">
+        {% if user.is_authenticated %}
+            <span class="username-display">
+                    <i class="fas fa-user"></i> {{ user.username }}
+                </span>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i> Выйти
+                </button>
+            </form>
+        {% endif %}
+        <div class="cart-link">
+            <a href="{% url 'cart:cart_detail' %}">
+                Корзина ({{ cart|length }})
+            </a>
+        </div>
+    </div>
+    {% block extra_head %}
+    {% endblock %}
 </head>
 <body>
-    <h1>Welcome!</h1>
+<header>
+    <h1>Library для {{ user.username }}</h1>
     <img src="{% static 'p.jpg' %}" alt="NO PREVIEW">
+    <nav>
+        <a href="{% url 'book_list' %}">Books</a> |
+        <a href="{% url 'author_list' %}">Authors</a> |
+        <a href="{% url 'genre_list' %}">Genres</a>
+    </nav>
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<footer>
+    <p>&copy; 2025</p>
+</footer>
 </body>
 </html>
+
