@@ -89,10 +89,16 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": env("MYSQL_DATABASE"),
-        "USER": env("MYSQL_USER"),
-        "PASSWORD": env("MYSQL_PASSWORD"),
+        # "USER": env("MYSQL_USER"),
+        "USER": "root",
+        "PASSWORD": env("MYSQL_ROOT_PASSWORD"),
         "HOST": env("MYSQL_HOST"),
         "PORT": env("MYSQL_PORT"),
+        # 'TEST': {
+        #     'NAME': env("MYSQL_DATABASE"),
+        #     'MIRROR': None,
+        #     'DEPENDENCIES': [],
+        # },
     }
 }
 
